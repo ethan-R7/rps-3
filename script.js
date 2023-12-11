@@ -42,7 +42,7 @@ function playOneRound(playerSelection, computerSelection) {
     
     results.textContent = `Results: ${result}
     Computer points: ${computerPoints}
-    Player points\n${playerPoints}`
+    Player points\n${playerPoints}`;
 
     if (playerPoints == 5) {
         gameWinner = document.createTextNode('You are the winner');
