@@ -3,24 +3,31 @@ const choice = ["rock", "paper", "scissors"];
 function getComputerChoice() {
     
     random_num = Math.floor(Math.random() * 3);
-    console.log(choice[random_num]);
+    //console.log(choice[random_num]);
     return choice[random_num];
 }
 
+let result = '';
+let playerPoints = 0;
+let computerPoints = 0;
+
 function playOneRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
-    result = ''
+    let result = ''
     if (playerSelection == computerSelection) {
-        alert(`It is a draw. Both you and the computer chose ${computerSelection}`);
-        return result = 'draw';
+        
+        result = 'draw';
+        
+        results.textContent = `Computer points: ${computerPoints}\nPlayer points : ${playerPoints}`
     }
     else if (
         playerSelection == 'rock' && computerSelection == 'paper' ||
         playerSelection == 'scissors' && computerSelection == 'rock' ||
         playerSelection == 'paper' && computerSelection == 'scissors'
         ) {
-        alert(`You lose. ${computerSelection} beats ${playerSelection}`);
-        return result = 'lose';
+        computerPoints ++;
+        result = 'lose';
+        
     }
 
     else if (
@@ -28,8 +35,22 @@ function playOneRound(playerSelection, computerSelection) {
         computerSelection == 'scissors' && playerSelection == 'rock' ||
         computerSelection == 'paper' && playerSelection == 'scissors'
         ) {
-        alert(`You win. ${playerSelection} beats ${computerSelection}`);
-        return result = 'win';
+        playerPoints++;
+        result = 'win';
+        
+    }
+    
+    results.textContent = `Results: ${result}
+    Computer points: ${computerPoints}
+    Player points\n${playerPoints}`
+
+    if (playerPoints == 5) {
+        gameWinner = document.createTextNode('You are the winner');
+        results.appendChild(gameWinner)
+    }
+    else if (computerPoints == 5) {
+        gameWinner = document.createTextNode('The computer is the winner');
+        results.appendChild(gameWinner)
     }
 }
 
@@ -51,6 +72,57 @@ function game(rounds) {
 
 //const playerSelection = "rock";
 //const computerSelection = getComputerChoice();
-const rounds = Number(prompt('How many rounds do you want to play'));
-game(rounds);
+const points = Number(prompt('How many points do you want to play to'));
+//game(points);
 //console.log(playOneRound(playerSelection, computerSelection));
+
+
+
+
+
+
+//Buttons for player option
+
+const playerDiv = document.querySelector('#playerDiv');
+
+const playerButtonsDiv = document.createElement('div');
+playerButtonsDiv.textContent = 'Choose one:';
+
+playerDiv.appendChild(playerButtonsDiv);
+
+const rockSelection = document.createElement('button');
+rockSelection.textContent = 'Rock';
+
+const paperSelection = document.createElement('button');
+paperSelection.textContent = 'Paper';
+
+const scissorsSelection = document.createElement('button');
+scissorsSelection.textContent = 'Scissors';
+
+
+playerButtonsDiv.appendChild(rockSelection);
+playerButtonsDiv.appendChild(paperSelection);
+playerButtonsDiv.appendChild(scissorsSelection);
+
+
+//buttons event listeners
+rockSelection.addEventListener('click', () => {
+    playOneRound('rock', getComputerChoice());
+});
+
+paperSelection.addEventListener('click', () => {
+    playOneRound('paper', getComputerChoice());
+});
+
+scissorsSelection.addEventListener('click', () => {
+    playOneRound('scissors', getComputerChoice());
+});
+
+
+// Display results
+const resultsDiv = document.querySelector('#resultsDiv');
+const results = document.createElement('div');
+results.textContent = `Results:`;
+
+resultsDiv.appendChild(results);
+
